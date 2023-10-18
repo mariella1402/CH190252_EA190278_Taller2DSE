@@ -29,6 +29,11 @@ public class VerTransaccionesCuentaForm {
         panel.add(scrollPane);
 
         frame.add(panel);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = frame.getSize();
+        int x = (screenSize.width - frameSize.width) / 2;
+        int y = (screenSize.height - frameSize.height) / 2;
+        frame.setLocation(x, y);
 
         obtenerCuentasCliente(idCliente);
         cuentasComboBox.addActionListener(e -> mostrarTransaccionesCuentaSeleccionada());
