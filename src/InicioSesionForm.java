@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,6 +23,7 @@ public class InicioSesionForm {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
+        panel.setBackground(new Color(93, 193, 185));
 
         JLabel duiLabel = new JLabel("DUI:");
         duiField = new JTextField(10);
@@ -29,6 +32,11 @@ public class InicioSesionForm {
         pinField = new JPasswordField(4);
 
         iniciarSesionButton = new JButton("Iniciar Sesión");
+
+        iniciarSesionButton.setBackground(new Color(213, 255, 255));
+        iniciarSesionButton.setForeground(Color.BLACK);
+        iniciarSesionButton.setFont(new Font("Arial", Font.BOLD, 14));
+        iniciarSesionButton.setSize(200,300);
 
         panel.add(duiLabel);
         panel.add(duiField);
@@ -42,6 +50,44 @@ public class InicioSesionForm {
         int x = (screenSize.width - frameSize.width) / 2;
         int y = (screenSize.height - frameSize.height) / 2;
         frame.setLocation(x, y);
+
+        //VALIDACIONES
+        duiField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || duiField.getText().length()>=9){
+                    e.consume();
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String duiFieldText = duiField.getText();
+
+                if(duiFieldText.length()>=9){
+                    duiField.setText(duiFieldText.substring(0 , 9));
+                }
+            }
+        });
+
+        pinField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || pinField.getText().length()>=4){
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String pinFieldText = pinField.getText();
+
+                if(pinFieldText.length()>=4){
+                    pinField.setText(pinFieldText.substring(0,9));
+                }
+            }
+        });
 
         iniciarSesionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

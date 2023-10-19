@@ -20,6 +20,7 @@ public class RetirarCuentaForm {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
+        panel.setBackground(new Color(93, 193, 185));
 
         cuentasComboBox = new JComboBox<>();
         JLabel cuentaLabel = new JLabel("Seleccionar Cuenta:");
@@ -59,15 +60,21 @@ public class RetirarCuentaForm {
                 String cuentaSeleccionada = (String) cuentasComboBox.getSelectedItem();
                 double montoRetiro = Double.parseDouble(montoRetiroField.getText());
 
-                if (saldoSuficiente(cuentaSeleccionada, montoRetiro)) {
-                    if (realizarRetiro(cuentaSeleccionada, montoRetiro)) {
-                        JOptionPane.showMessageDialog(null, "Retiro realizado con éxito.", "Retiro Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                        frame.dispose();
+                try{
+                    if (saldoSuficiente(cuentaSeleccionada, montoRetiro)) {
+
+                        if (realizarRetiro(cuentaSeleccionada, montoRetiro)) {
+                            JOptionPane.showMessageDialog(null, "Retiro realizado con éxito.", "Retiro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                            frame.dispose();
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Error al realizar el retiro.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error al realizar el retiro.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Saldo insuficiente.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Saldo insuficiente.", "Error", JOptionPane.ERROR_MESSAGE);
+                }catch(NumberFormatException ex){
+                    JOptionPane.showMessageDialog(null, "Ingrese un monto válido", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -154,6 +161,12 @@ public class RetirarCuentaForm {
         String url = "jdbc:mysql://localhost:3306/taller2dse";
         String user = "root";
         String password = "";
+
+        //Validar que la cantidad del retiro no sea 0, ni cantidades negativas
+        if (montoRetiro <= 0) {
+            JOptionPane.showMessageDialog(null, "Ingrese un monto válido para el retiro.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
         try {
             Connection connection = DriverManager.getConnection(url, user, password);

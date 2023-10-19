@@ -14,6 +14,7 @@ public class MenuPrincipal {
         frame.setSize(400, 200);
 
         JPanel panel = new JPanel();
+        panel.setBackground(new Color(93, 193, 185));
 
         crearClienteButton = new JButton("Crear Cliente");
         accederCuentaButton = new JButton("Acceder a la Cuenta");
