@@ -17,6 +17,7 @@ public class VerTransaccionesCuentaForm {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 1));
+        panel.setBackground(new Color(93, 193, 185));
 
         cuentasComboBox = new JComboBox<>();
         JLabel cuentaLabel = new JLabel("Seleccionar Cuenta:");

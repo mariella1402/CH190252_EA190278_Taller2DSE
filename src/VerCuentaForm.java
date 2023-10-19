@@ -21,6 +21,7 @@ public class VerCuentaForm {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4, 2));
+        panel.setBackground(new Color(93, 193, 185));
 
         cuentasComboBox = new JComboBox<>();
         JLabel cuentaLabel = new JLabel("Seleccionar Cuenta:");

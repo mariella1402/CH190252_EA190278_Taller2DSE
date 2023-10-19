@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.Random;
 
@@ -18,6 +20,7 @@ public class CrearClienteForm {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
+        panel.setBackground(new Color(93, 193, 185));
 
         JLabel nombreLabel = new JLabel("Nombre:");
         nombreField = new JTextField(20);
@@ -40,6 +43,25 @@ public class CrearClienteForm {
         int y = (screenSize.height - frameSize.height) / 2;
         frame.setLocation(x, y);
 
+        //Validaciones del DUI
+        duiField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || duiField.getText().length()>=9){
+                    e.consume();
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String duiFieldText = duiField.getText();
+
+                if(duiFieldText.length()>=9){
+                    duiField.setText(duiFieldText.substring(0 , 9));
+                }
+            }
+        });
+
         crearClienteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String nombre = nombreField.getText();
@@ -48,6 +70,16 @@ public class CrearClienteForm {
                 // Genera un PIN aleatorio de 4 dígitos
                 String pin = generarPIN();
 
+                //Para que el campo nombre no lo guarde vacio
+                if(nombre.trim().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Es necesario un nombre para crear la cuenta","Error",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                //Validación para que el DUI solo acepte numeros
+                if(!dui.matches("^[0-9]{9}$")){
+                    JOptionPane.showMessageDialog(null,"El DUI debe tener 9 digitos, no ingrese el guion", "Error",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 // Inserta el cliente en la base de datos
                 if (insertarCliente(nombre, dui, pin)) {

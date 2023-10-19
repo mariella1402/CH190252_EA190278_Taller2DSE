@@ -18,6 +18,7 @@ public class CrearCuentaForm {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
+        panel.setBackground(new Color(93, 193, 185));
 
         JLabel nombreLabel = new JLabel("Nombre:");
         JLabel saldoLabel = new JLabel("Saldo Inicial:");

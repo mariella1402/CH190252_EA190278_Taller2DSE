@@ -22,6 +22,7 @@ public class VerTodasLasCuentasForm {
 
         JScrollPane scrollPane = new JScrollPane(cuentasTextArea);
         panel.add(scrollPane, BorderLayout.CENTER);
+        panel.setBackground(new Color(93, 193, 185));
 
         frame.add(panel);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
