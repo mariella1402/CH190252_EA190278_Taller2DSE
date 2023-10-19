@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.sql.*;
 import java.util.Random;
 
@@ -62,6 +59,27 @@ public class CrearClienteForm {
             }
         });
 
+        //Validaciones del campo nombre
+        nombreField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (Character.isDigit(c)){
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
         crearClienteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String nombre = nombreField.getText();
@@ -70,7 +88,7 @@ public class CrearClienteForm {
                 // Genera un PIN aleatorio de 4 dígitos
                 String pin = generarPIN();
 
-                //Para que el campo nombre no lo guarde vacio
+                //Para que el campo nombre no lo guarde vacio y solo permita letras
                 if(nombre.trim().isEmpty()){
                     JOptionPane.showMessageDialog(null,"Es necesario un nombre para crear la cuenta","Error",JOptionPane.ERROR_MESSAGE);
                     return;
